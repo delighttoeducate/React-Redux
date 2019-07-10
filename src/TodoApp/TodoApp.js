@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import styled, { css } from "styled-components";
+import {
+  TodoHeader,
+  TodoAdd,
+  TodoArea,
+  TodoNavigate,
+  TodoWrapperBox,
+  Button
+} from "./StyledComponets";
 import EachTask from "./EachTask";
 export class TodoApp extends Component {
   constructor(props) {
@@ -25,56 +32,6 @@ export class TodoApp extends Component {
     });
   }
   render() {
-    // Styled Componets
-    const TodoHeader = styled.div`
-      margin: auto;
-      margin-top: 50px;
-      width: 50%;
-      border: 1px solid grey;
-      padding: 10px;
-      text-align: center;
-      background-color: blue;
-      font-weight: bold;
-      color: white;
-    `;
-    const Button = styled.button`
-      width: 95px;
-      height: 36px;
-      background-color: blue;
-      color: white;
-      font-weight: bold;
-      border: 1px solid grey;
-      margin: auto;
-    `;
-    const TodoWrapperBox = styled.div``;
-
-    const TodoArea = styled.div`
-      margin: auto;
-      margin-top: 10px;
-      width: 50%;
-      border: 1px solid grey;
-      padding: 10px;
-    `;
-
-    const TodoAdd = styled.div`
-      margin: auto;
-      width: 50%;
-      padding: 10px;
-      border: 1px solid grey;
-    `;
-
-    const TodoNavigate = styled.div`
-      margin: auto;
-      width: 50%;
-      padding: 10px;
-      border: 1px solid grey;
-      display: flex;
-      justify-content: space-between;
-    `;
-
-    // Handlers
-
-    
     this.handlerClick = e => {
       let tmpArr = [];
 
@@ -91,7 +48,7 @@ export class TodoApp extends Component {
           displayItems: tmpArr
         },
         () => {
-        //   console.log("State object evt: %O", this.state.displayItems);
+          //   console.log("State object evt: %O", this.state.displayItems);
         }
       );
     };
@@ -109,6 +66,7 @@ export class TodoApp extends Component {
                     key={eachItem.id}
                     subject={eachItem.subject}
                     status={eachItem.status}
+                    id={eachItem.id}
                   />
                   <br />
                 </div>
@@ -141,5 +99,4 @@ export class TodoApp extends Component {
     );
   }
 }
-
 export default TodoApp;

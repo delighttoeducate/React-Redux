@@ -1,27 +1,21 @@
-import React, { Component } from 'react'
-import styled,{css} from 'styled-components'
+import React, { Component } from "react";
+import { Checkbox, Span } from "./StyledComponets";
 class EachTask extends Component {
-  
-    handlerCheckbox=()=>{
-        alert("hello");
-    }
+  handlerCheckbox = itemId => {
+    alert(itemId);
+  };
 
-    render() {
-        const Span=styled.span`
-        text-decoration:${props=>props.taskStatus==='completed'?'line-through':'none'};
-        `
-        const Checkbox=styled.input`
-        margin:auto;
-        
-        
-        `
-
-        return (
-            <>
-                <Checkbox type='checkbox' onClick={()=>this.handlerCheckbox()} /><Span taskStatus={this.props.status}>{this.props.subject}</Span>
-            </>
-        )
-    }
+  render() {
+    return (
+      <>
+        <Checkbox
+          type="checkbox"
+          onClick={() => this.handlerCheckbox(this.props.id)}
+        />
+        <Span taskStatus={this.props.status}>{this.props.subject}</Span>
+      </>
+    );
+  }
 }
 
-export default EachTask
+export default EachTask;
