@@ -18,15 +18,29 @@ export class TodoApp extends Component {
         { id: 2, subject: "Welcome Task2", status: "completed" },
         { id: 3, subject: "Welcome Task3", status: "active" },
         { id: 4, subject: "Welcome Task4", status: "completed" },
-        { id: 5, subject: "Welcome Task5", status: "active" }
+        { id: 5, subject: "Welcome Task5", status: "active" },
+        { id: 6, subject: "Welcome Task6", status: "completed" },
       ],
       displayItems: []
     };
   }
 
+  itemStatusChangeHandler = (id, status) => {
+    // alert(`Item status changed invoked from child-->id-${id},status-${status} `);
+    this.setState({
+    
+      displayItems:this.state.todoItems.map(eItem=>
+        eItem.id===id?{...eItem,status:status}:eItem
+      )
+    },()=>{
+      // console.log("%O",this.state.todoItems);
+    })
+  
+  };
+
   componentDidMount() {
     // Onload display All Items
-
+  
     this.setState({
       displayItems: this.state.todoItems
     });
@@ -67,6 +81,9 @@ export class TodoApp extends Component {
                     subject={eachItem.subject}
                     status={eachItem.status}
                     id={eachItem.id}
+                    statusChanger={this.itemStatusChangeHandler.bind(this)}
+                    
+                    
                   />
                   <br />
                 </div>
