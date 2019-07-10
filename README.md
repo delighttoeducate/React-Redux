@@ -23,4 +23,4 @@ localhost:3000
 
 ## Authors
 
-* **Ganesh Koilada**  -  [](https://in.linkedin.com/in/itsmeganeshkoilada)
+* **Ganesh Koilada**  -  [https://in.linkedin.com/in/itsmeganeshkoilada](https://in.linkedin.com/in/itsmeganeshkoilada)
