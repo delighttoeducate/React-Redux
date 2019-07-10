@@ -29,12 +29,16 @@ export class TodoApp extends Component {
     // alert(`Item status changed invoked from child-->id-${id},status-${status} `);
     this.setState({
     
-      displayItems:this.state.todoItems.map(eItem=>
+      todoItems:this.state.todoItems.map(eItem=>
         eItem.id===id?{...eItem,status:status}:eItem
       )
     },()=>{
       // console.log("%O",this.state.todoItems);
+      this.setState({
+        displayItems:this.state.todoItems
+      })
     })
+   
   
   };
 
@@ -82,7 +86,7 @@ export class TodoApp extends Component {
                     status={eachItem.status}
                     id={eachItem.id}
                     statusChanger={this.itemStatusChangeHandler.bind(this)}
-                    
+                    checkedCheck={eachItem.status==='completed'?true:false}
                     
                   />
                   <br />
