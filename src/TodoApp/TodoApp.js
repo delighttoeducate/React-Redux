@@ -6,10 +6,13 @@ import {
   TodoNavigate,
   TodoWrapperBox,
   Button,
-  TodoAddInput
+  TodoAddInput,
+  TodoErrLog,
+  TodoErrSpan
 } from "./StyledComponets";
 import EachTask from "./EachTask";
 export class TodoApp extends Component {
+    
   constructor(props) {
     super(props);
 
@@ -23,10 +26,14 @@ export class TodoApp extends Component {
         { id: 6, subject: "Welcome Task6", status: "completed" }
       ],
       displayItems: [],
-      addItemTxt: ""
+      addItemTxt: "",
+      errMsg: "",
+      activeBgColor: "teal",
+      completedBgColor: "blue",
+      allBgColor: "blue"
     };
   }
-
+ 
   itemStatusChangeHandler = (id, status) => {
     // alert(`Item status changed invoked from child-->id-${id},status-${status} `);
     this.setState(
@@ -44,23 +51,34 @@ export class TodoApp extends Component {
     );
   };
 
-  handlerAddClick = () => {
-    let newItem = {
-      id: this.state.todoItems.length + 1,
-      subject: this.state.addItemTxt,
-      status: "active"
-    };
-    let newTodoList = [...this.state.todoItems, newItem];
-    this.setState(
-      {
-        todoItems: newTodoList
-      },
-      () => {
-        this.setState({
-          displayItems: this.state.todoItems
-        });
-      }
-    );
+  handlerAddClick = event => {
+    event.preventDefault();
+    if (this.state.addItemTxt.length > 0) {
+      this.setState({
+        errMsg: ""
+      });
+      let newItem = {
+        id: this.state.todoItems.length + 1,
+        subject: this.state.addItemTxt,
+        status: "active"
+      };
+
+      let newTodoList = [...this.state.todoItems, newItem];
+      this.setState(
+        {
+          todoItems: newTodoList
+        },
+        () => {
+          this.setState({
+            displayItems: this.state.todoItems
+          });
+        }
+      );
+    } else {
+      this.setState({
+        errMsg: "Task name shouldn't be empty!"
+      });
+    }
   };
 
   handlerAddInput = event => {
@@ -74,13 +92,38 @@ export class TodoApp extends Component {
     this.handlerClick("active");
   }
   render() {
-    this.handlerClick = e => {
-      let tmpArr = [];
+    const {todoItems} = this.state
 
+
+    this.handlerClick = e => {
+      this.setState({
+        errMsg: ""
+      });
+      e === "completed" &&
+        this.setState({
+          activeBgColor: "blue",
+          completedBgColor: "teal",
+          allBgColor: "blue"
+        });
+      e === "active" &&
+        this.setState({
+          activeBgColor: "teal",
+          completedBgColor: "blue",
+          allBgColor: "blue"
+        });
+      e === "all" &&
+        this.setState({
+          activeBgColor: "blue",
+          completedBgColor: "blue",
+          allBgColor: "teal"
+        });
+
+      let tmpArr = [];
       this.state.todoItems.filter(item => {
         if (item.status === e) {
           tmpArr.push(item);
         }
+        return null;
       });
       if (e === "all") {
         tmpArr = this.state.todoItems;
@@ -100,12 +143,14 @@ export class TodoApp extends Component {
       <div>
         <TodoWrapperBox>
           <TodoHeader>Todo List</TodoHeader>
+          <TodoErrLog>
+            <TodoErrSpan>{this.state.errMsg}</TodoErrSpan>
+          </TodoErrLog>
           <TodoArea>
             {this.state.displayItems.map(eachItem => {
               return (
-                <div>
+                <React.Fragment key={eachItem.id}>
                   <EachTask
-                    key={eachItem.id}
                     subject={eachItem.subject}
                     status={eachItem.status}
                     id={eachItem.id}
@@ -115,36 +160,51 @@ export class TodoApp extends Component {
                     }
                   />
                   <br />
-                </div>
+                </React.Fragment>
               );
             })}
           </TodoArea>
           <TodoNavigate>
-            <Button color="blue" onClick={() => this.handlerClick("active")}>
+            <Button
+              bgColor={this.state.activeBgColor}
+              txtColor="white"
+              onClick={() => this.handlerClick("active")}
+            >
               Active
             </Button>
-            <Button color="blue" onClick={() => this.handlerClick("completed")}>
+            <Button
+              bgColor={this.state.completedBgColor}
+              txtColor="white"
+              onClick={() => this.handlerClick("completed")}
+            >
               Completed
             </Button>
-            <Button color="blue" onClick={() => this.handlerClick("all")}>
+            <Button
+              bgColor={this.state.allBgColor}
+              txtColor="white"
+              onClick={() => this.handlerClick("all")}
+            >
               All
             </Button>
           </TodoNavigate>
-          <TodoAddBox>
-            <TodoAddInput
-              onChange={this.handlerAddInput}
-              value={this.state.addItemTxt}
-              placeholder="Add new task to Checklist"
-            />
+          <form onSubmit={() => this.handlerAddClick()}>
+            <TodoAddBox>
+              <TodoAddInput
+                onChange={this.handlerAddInput}
+                value={this.state.addItemTxt}
+                placeholder="Add new task to Checklist and press <ENTER>"
+              />
 
-            <Button
-              location="margin:0 auto"
-              color="blue"
-              onClick={() => this.handlerAddClick()}
-            >
-              Add
-            </Button>
-          </TodoAddBox>
+              <Button
+                location="margin:0 auto"
+                bgColor="blue"
+                txtColor="white"
+                onClick={this.handlerAddClick}
+              >
+                Add
+              </Button>
+            </TodoAddBox>
+          </form>
         </TodoWrapperBox>
       </div>
     );

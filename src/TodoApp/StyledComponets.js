@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const TodoHeader = styled.div`
   margin: auto;
@@ -14,8 +14,8 @@ export const TodoHeader = styled.div`
 export const Button = styled.button`
   width: 95px;
   height: 36px;
-  background-color: ${props => props.color};
-  color: white;
+  background-color: ${props => props.bgColor};
+  color:  ${props => props.txtColor};
   font-weight: bold;
   border: 1px solid grey;
   margin: auto;
@@ -24,7 +24,6 @@ export const TodoWrapperBox = styled.div``;
 
 export const TodoArea = styled.div`
   margin: auto;
-  margin-top: 10px;
   width: 50%;
   border: 1px solid grey;
   padding: 10px;
@@ -65,3 +64,18 @@ export const TodoAddInput = styled.input`
   width: 100%;
   height: 30px;
 `;
+
+export const TodoErrLog=styled.div`
+margin:auto;
+width:50%;
+border:1px solid grey;
+padding:10px;
+margin-top: 10px;
+text-align:center;
+color:red;
+
+`
+
+export const TodoErrSpan=styled.span`
+
+`
