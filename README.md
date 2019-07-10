@@ -1,7 +1,26 @@
-#React Todo List Applicton
-Go ahead and clone the repository and run below command to start the project
+# Todo List
 
-## " npm install " <- In same directory
 
-## Used libraries
-    *Styled Components
+## Built With
+* [React JS](#) - Used for Structure elements.
+* [Javascript](#) - Used for Client Side Validation.
+
+### Installing
+```sh
+- git clone 
+- npm install
+- npm start
+```
+Check below url 
+```sh
+localhost:3000
+```
+
+###  Demo
+[![N|Solid](https://drive.google.com/uc?export=download&id=1NoLXO31DJu0OqaIVosYRPfNXqRRylcFX)]()
+
+
+
+## Authors
+
+* **Ganesh Koilada**  -  [](https://in.linkedin.com/in/itsmeganeshkoilada)
