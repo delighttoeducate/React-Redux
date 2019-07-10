@@ -12,7 +12,6 @@ import {
 } from "./StyledComponets";
 import EachTask from "./EachTask";
 export class TodoApp extends Component {
-    
   constructor(props) {
     super(props);
 
@@ -33,7 +32,7 @@ export class TodoApp extends Component {
       allBgColor: "blue"
     };
   }
- 
+
   itemStatusChangeHandler = (id, status) => {
     // alert(`Item status changed invoked from child-->id-${id},status-${status} `);
     this.setState(
@@ -91,53 +90,51 @@ export class TodoApp extends Component {
     // Onload display Active Items
     this.handlerClick("active");
   }
-  render() {
-    const {todoItems} = this.state
 
-
-    this.handlerClick = e => {
+  handlerClick = e => {
+    this.setState({
+      errMsg: ""
+    });
+    e === "completed" &&
       this.setState({
-        errMsg: ""
+        activeBgColor: "blue",
+        completedBgColor: "teal",
+        allBgColor: "blue"
       });
-      e === "completed" &&
-        this.setState({
-          activeBgColor: "blue",
-          completedBgColor: "teal",
-          allBgColor: "blue"
-        });
-      e === "active" &&
-        this.setState({
-          activeBgColor: "teal",
-          completedBgColor: "blue",
-          allBgColor: "blue"
-        });
-      e === "all" &&
-        this.setState({
-          activeBgColor: "blue",
-          completedBgColor: "blue",
-          allBgColor: "teal"
-        });
+    e === "active" &&
+      this.setState({
+        activeBgColor: "teal",
+        completedBgColor: "blue",
+        allBgColor: "blue"
+      });
+    e === "all" &&
+      this.setState({
+        activeBgColor: "blue",
+        completedBgColor: "blue",
+        allBgColor: "teal"
+      });
 
-      let tmpArr = [];
-      this.state.todoItems.filter(item => {
-        if (item.status === e) {
-          tmpArr.push(item);
-        }
-        return null;
-      });
-      if (e === "all") {
-        tmpArr = this.state.todoItems;
+    let tmpArr = [];
+    this.state.todoItems.filter(item => {
+      if (item.status === e) {
+        tmpArr.push(item);
       }
-      this.setState(
-        {
-          displayItems: tmpArr
-        },
-        () => {
-          //   console.log("State object evt: %O", this.state.displayItems);
-        }
-      );
-    };
+      return null;
+    });
+    if (e === "all") {
+      tmpArr = this.state.todoItems;
+    }
+    this.setState(
+      {
+        displayItems: tmpArr
+      },
+      () => {
+        //   console.log("State object evt: %O", this.state.displayItems);
+      }
+    );
+  };
 
+  render() {
     this.filterTodoItems = e => {};
     return (
       <div>
