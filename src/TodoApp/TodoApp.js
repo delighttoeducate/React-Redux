@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import {
   TodoHeader,
-  TodoAdd,
+  TodoAddBox,
   TodoArea,
   TodoNavigate,
   TodoWrapperBox,
-  Button
+  Button,
+  TodoAddInput
 } from "./StyledComponets";
 import EachTask from "./EachTask";
 export class TodoApp extends Component {
@@ -19,35 +20,58 @@ export class TodoApp extends Component {
         { id: 3, subject: "Welcome Task3", status: "active" },
         { id: 4, subject: "Welcome Task4", status: "completed" },
         { id: 5, subject: "Welcome Task5", status: "active" },
-        { id: 6, subject: "Welcome Task6", status: "completed" },
+        { id: 6, subject: "Welcome Task6", status: "completed" }
       ],
-      displayItems: []
+      displayItems: [],
+      addItemTxt: ""
     };
   }
 
   itemStatusChangeHandler = (id, status) => {
     // alert(`Item status changed invoked from child-->id-${id},status-${status} `);
+    this.setState(
+      {
+        todoItems: this.state.todoItems.map(eItem =>
+          eItem.id === id ? { ...eItem, status: status } : eItem
+        )
+      },
+      () => {
+        // console.log("%O",this.state.todoItems);
+        this.setState({
+          displayItems: this.state.todoItems
+        });
+      }
+    );
+  };
+
+  handlerAddClick = () => {
+    let newItem = {
+      id: this.state.todoItems.length + 1,
+      subject: this.state.addItemTxt,
+      status: "active"
+    };
+    let newTodoList = [...this.state.todoItems, newItem];
+    this.setState(
+      {
+        todoItems: newTodoList
+      },
+      () => {
+        this.setState({
+          displayItems: this.state.todoItems
+        });
+      }
+    );
+  };
+
+  handlerAddInput = event => {
     this.setState({
-    
-      todoItems:this.state.todoItems.map(eItem=>
-        eItem.id===id?{...eItem,status:status}:eItem
-      )
-    },()=>{
-      // console.log("%O",this.state.todoItems);
-      this.setState({
-        displayItems:this.state.todoItems
-      })
-    })
-   
-  
+      addItemTxt: event.target.value
+    });
   };
 
   componentDidMount() {
-    // Onload display All Items
-  
-    this.setState({
-      displayItems: this.state.todoItems
-    });
+    // Onload display Active Items
+    this.handlerClick("active");
   }
   render() {
     this.handlerClick = e => {
@@ -86,35 +110,41 @@ export class TodoApp extends Component {
                     status={eachItem.status}
                     id={eachItem.id}
                     statusChanger={this.itemStatusChangeHandler.bind(this)}
-                    checkedCheck={eachItem.status==='completed'?true:false}
-                    
+                    checkedCheck={
+                      eachItem.status === "completed" ? true : false
+                    }
                   />
                   <br />
                 </div>
               );
             })}
           </TodoArea>
-          <TodoAdd>
-            <input type="text" width="100%" height="100%" />
-          </TodoAdd>
-
           <TodoNavigate>
-            <Button location="left" onClick={() => this.handlerClick("all")}>
-              All
-            </Button>
-            <Button
-              location="margin:0 auto"
-              onClick={() => this.handlerClick("active")}
-            >
+            <Button color="blue" onClick={() => this.handlerClick("active")}>
               Active
             </Button>
-            <Button
-              location="right"
-              onClick={() => this.handlerClick("completed")}
-            >
+            <Button color="blue" onClick={() => this.handlerClick("completed")}>
               Completed
             </Button>
+            <Button color="blue" onClick={() => this.handlerClick("all")}>
+              All
+            </Button>
           </TodoNavigate>
+          <TodoAddBox>
+            <TodoAddInput
+              onChange={this.handlerAddInput}
+              value={this.state.addItemTxt}
+              placeholder="Add new task to Checklist"
+            />
+
+            <Button
+              location="margin:0 auto"
+              color="blue"
+              onClick={() => this.handlerAddClick()}
+            >
+              Add
+            </Button>
+          </TodoAddBox>
         </TodoWrapperBox>
       </div>
     );

@@ -14,7 +14,7 @@ export const TodoHeader = styled.div`
 export const Button = styled.button`
   width: 95px;
   height: 36px;
-  background-color: blue;
+  background-color: ${props => props.color};
   color: white;
   font-weight: bold;
   border: 1px solid grey;
@@ -43,11 +43,13 @@ export const Checkbox = styled.input`
   vertical-align: middle;
 `;
 
-export const TodoAdd = styled.div`
+export const TodoAddBox = styled.div`
   margin: auto;
   width: 50%;
   padding: 10px;
   border: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const TodoNavigate = styled.div`
@@ -57,4 +59,9 @@ export const TodoNavigate = styled.div`
   border: 1px solid grey;
   display: flex;
   justify-content: space-between;
+`;
+
+export const TodoAddInput = styled.input`
+  width: 100%;
+  height: 30px;
 `;
